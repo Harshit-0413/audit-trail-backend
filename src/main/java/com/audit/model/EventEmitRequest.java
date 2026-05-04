@@ -1,9 +1,11 @@
 package com.audit.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import jakarta.validation.constraints.Pattern;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,9 +28,12 @@ public class EventEmitRequest {
     private String outcome = "INFO";
 
     private String correlationId;
-    private String clientTimestamp;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private Instant clientTimestamp;
+
     private String ipAddress;
 
-    private Map<String , Object> metadata = new HashMap<>();
+    private Map<String, Object> metadata = new HashMap<>();
 
 }

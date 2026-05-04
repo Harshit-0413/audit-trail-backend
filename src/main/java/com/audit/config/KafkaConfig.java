@@ -10,33 +10,32 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
 
-
 @Configuration
 public class KafkaConfig {
-    @Value("${Audit.kafka.topic}")
+    @Value("${audit.kafka.topic}")
     private String topicName;
 
-    @Value("${Kafka.audit.partitions}")
+    @Value("${audit.kafka.partitions}")
     private int partitions;
 
-    @Value("${audit.kafka.replaced}")
+    @Value("${audit.kafka.replicas}")
     private int replicas;
 
     @Bean
-    public NewTopic auditEventsTopic(){
+    public NewTopic auditEventsTopic() {
 
         return TopicBuilder.name(topicName)
                 .partitions(partitions)
                 .replicas(replicas)
-                .config("retention.ms" ,
-                        String.valueOf(30L*24*60*60*1000))
-                .config("compression.type" , "lz4")
+                .config("retention.ms",
+                        String.valueOf(30L * 24 * 60 * 60 * 1000))
+                .config("compression.type", "lz4")
                 .build();
     }
 
     @Bean
-    public KafkaTemplate<String , AuditEvent> kafkaTemplate(ProducerFactory <String , AuditEvent> producerFactory) {
+    public KafkaTemplate<String, AuditEvent> kafkaTemplate(ProducerFactory<String, AuditEvent> producerFactory) {
 
         return new KafkaTemplate<>(producerFactory);
+    }
 }
-        }

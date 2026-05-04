@@ -13,13 +13,17 @@ import java.util.List;
 @Repository
 public interface AuditEventRepository extends MongoRepository<AuditEvent, String> {
 
-    Page<AuditEvent> findServiceNameOrderByTimestampDesc(String serviceName, Pageable pageable);
+    Page<AuditEvent> findByServiceNameOrderByTimestampDesc(String serviceName, Pageable pageable);
 
     Page<AuditEvent> findByActorIdOrderByTimestampDesc(String actorId, Pageable pageable);
 
-    Page<AuditEvent> findCorrelationIdOrderByTimestampDesc(
+    Page<AuditEvent> findByCorrelationIdOrderByTimestampDesc(
             String correlationId, Pageable pageable
     );
+
+    Page<AuditEvent> findAllByOrderByTimestampDesc(Pageable pageable);
+
+    Page<AuditEvent> findByEventTypeOrderByTimestampDesc(String eventType, Pageable pageable);
 
     @Query
             ("{ $and: [ " +
@@ -28,16 +32,11 @@ public interface AuditEventRepository extends MongoRepository<AuditEvent, String
                     "  { $or: [ { 'outcome':     ?2 }, { ?2: null } ] }, " +
                     "  { 'timestamp': { $gte: ?3, $lte: ?4 } } " +
                     "] }")
-    Page<AuditEvent> findWithFilters(
-            String serviceName, String eventType, String outcome,
-            Instant from, Instant to, Pageable pageable
-    );
-
     long countByServiceName(String serviceName);
 
     long countByOutcome(String outcome);
 
     long countByTimestampAfter(Instant since);
 
-    List<AuditEvent> findTop10ByOrderByTimeStampDesc();
+    List<AuditEvent> findTop10ByOrderByTimestampDesc();
 }

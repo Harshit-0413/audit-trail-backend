@@ -3,6 +3,7 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+.wslconfig
 
 ### STS ###
 .apt_generated
@@ -18,6 +19,9 @@ target/
 *.iws
 *.iml
 *.ipr
+*.tmp
+*.temp
+*.cache
 
 ### NetBeans ###
 /nbproject/private/
@@ -42,3 +46,10 @@ Thumbs.db
 # Env files
 .env
 application-local.properties
+
+# Windows
+Desktop.ini
+
+# Mac
+.AppleDouble
+.LSOverride
